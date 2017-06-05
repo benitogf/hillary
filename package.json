@@ -1,0 +1,47 @@
+{
+  "name": "hillary",
+  "version": "0.0.1",
+  "description": "Remote execution tool, ssh conection following a YML config file.",
+  "keywords": [
+    "ssh",
+    "deploy",
+    "remote deployment",
+    "yml"
+  ],
+  "main": "./bin/hillary",
+  "bin": {
+    "hillary": "./bin/hillary"
+  },
+  "scripts": {
+    "hint": "standard --verbose | snazzy",
+    "test": "nyc mocha"
+  },
+  "author": "",
+  "license": "WTFPL",
+  "standard": {
+    "globals": [
+      "chai",
+      "expect"
+    ],
+    "env": {
+      "node": true,
+      "mocha": true
+    }
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "cli-spinners": "^1.0.0",
+    "node-ssh": "^4.2.2",
+    "ora": "^1.2.0",
+    "yargs": "^8.0.1",
+    "yml": "0.0.5"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
+    "snazzy": "^6.0.0",
+    "standard": "^9.0.1"
+  }
+}

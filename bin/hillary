@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+process.title = 'hillary'
+const fs = require('fs')
+const path = require('path')
+const cwd = process.cwd()
+const node_ssh = require('node-ssh')
+const Promise = require("bluebird")
+const Yml = require("yml")
+const cliSpinners = require('cli-spinners')
+const ora = require('ora')
+const ssh = new node_ssh()
+const argv = require('yargs').argv
+const ymlPath = path.join(cwd, 'hillary.yml')
+if (fs.existsSync(ymlPath)) {
+    const hillary = Yml.load(ymlPath)
+    const spinner = ora({
+        text: 'Deploying ' + argv._[0] + ' env',
+        spinner: cliSpinners.dots
+    })
+
+    const envs = Object.keys(hillary.envs)
+
+    if (envs.indexOf(argv._[0]) !== -1) {
+        const deploy = hillary.deploy_before.concat(hillary.envs[argv._[0]].deploy,  hillary.deploy_after)
+        spinner.start()
+        ssh.connect(hillary.envs[argv._[0]])
+        .then(function() {
+            deploy.reduce((cur, next) => {
+                return cur.then((log) => {
+                    return ssh.execCommand(next, hillary.ssh).then((log) => {
+                        console.log('\n' + next + '\n' + log.stdout)
+                        if (log.stderr) {
+                            console.log('\n' + next + '\n' + log.stderr)
+                        }
+                    });
+                });
+            }, Promise.resolve()).then(() => {
+                console.log(argv._[0] + ' deployment done')
+                ssh.dispose()
+                spinner.stop()
+            })
+            .catch((err) => {
+                console.log(err)
+                console.log(argv._[0] + ' deployment error')
+                ssh.dispose()
+                spinner.stop()
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+            console.log(argv._[0] + ' deployment error')
+            spinner.stop()
+        })
+    } else {
+        console.log('could not find ' + argv._[0] + ' enviroment defined in hillary.yml, please check')
+    }
+} else {
+    console.log('could not find hillary.yml in current directory, please check')
+}
