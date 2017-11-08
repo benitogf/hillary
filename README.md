@@ -1,10 +1,6 @@
 # hillary
 
-Remote execution tool, ssh conection following a YML config file.
-
-## Requirements
-
-https://github.com/quartzjer/ursa/#windows-install
+Remote execution tool, ssh conection following a YAML config file.
 
 ## Installation
 

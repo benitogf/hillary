@@ -5,14 +5,14 @@ const path = require('path')
 const cwd = process.cwd()
 const node_ssh = require('node-ssh')
 const Promise = require("bluebird")
-const Yml = require("yml")
+const readYml = require("read-yaml")
 const cliSpinners = require('cli-spinners')
 const ora = require('ora')
 const ssh = new node_ssh()
 const argv = require('yargs').argv
 const ymlPath = path.join(cwd, 'hillary.yml')
 if (fs.existsSync(ymlPath)) {
-    const hillary = Yml.load(ymlPath)
+    const hillary = readYml.sync(ymlPath)
     const spinner = ora({
         text: 'Deploying ' + argv._[0] + ' env',
         spinner: cliSpinners.dots

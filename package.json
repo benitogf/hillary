@@ -31,17 +31,16 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "cli-spinners": "^1.0.0",
-    "node-ssh": "^4.2.2",
+    "node-ssh": "^5.0.0",
     "ora": "^1.2.0",
-    "yargs": "^8.0.1",
-    "yml": "0.0.5"
+    "read-yaml": "^1.1.0",
+    "yargs": "^10.0.3"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "coveralls": "^2.11.15",
-    "mocha": "^3.2.0",
-    "nyc": "^10.1.2",
-    "snazzy": "^6.0.0",
-    "standard": "^9.0.1"
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "nyc": "^11.3.0",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.3"
   }
 }
